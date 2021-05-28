@@ -29,8 +29,28 @@ xnoremap <expr> gz ToTitle()
 nnoremap <expr> gzz ToTitle() .. '_'
 ```
 
+# Installation
+
+For example, if you use [vim-plug](https://github.com/junegunn/vim-plug):
+
+```
+
+call plug#begin('~/.vim/plugged')
+  Plug 'iggredible/totitle-vim'
+call plug#end()
+```
+
+Restart Vim / source your vimrc, then run `:PlugInstall`.
+
+It should work with other plugin managers too.
+
+If you use packages (`:h packages`):
+
+```
+git clone https://github.com/iggredible/totitle-vim.git ~/.vim/pack/vendor/start/totitle-vim
+vim -u NONE -c "helptags ~/.vim/pack/vendor/start/totitle-vim/doc/" -c q
+```
 
 # License
 
-Same as Vim license (from Vim, run `:h license`).
-
+Same as Vim license (`:h license`).
