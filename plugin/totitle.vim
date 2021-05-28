@@ -8,20 +8,13 @@ if exists('g:totitle_excluded_words')
     call map(s:local_exclusion_list, 'tolower(v:val)')
 endif
 
-function! s:getCol(mark)
-  if virtcol("'".a:mark) <= 1
-   return 0
-  endif
-
-  exe "sil! keepj norm! `" . a:mark . "h"
-
-  return virtcol(".")
-endfunction
-
 function! s:capitalizeFirstWord(string)
-  let l:lineArr = trim(a:string)->split('\n')
-  let l:lineArr = map(l:lineArr, 'toupper(v:val[0]) . v:val[1:]')
-  return l:lineArr->join("\n")
+  if (a:string =~ "\n")
+    let l:lineArr = trim(a:string)->split('\n')
+    let l:lineArr = map(l:lineArr, 'toupper(v:val[0]) . v:val[1:]')
+    return l:lineArr->join("\n")
+  endif
+  return toupper(a:string[0]) . a:string[1:]
 endfunction
 
 function! s:capitalize(string)
@@ -68,7 +61,7 @@ function! ToTitle(type = '')
     let l:UPCASE_REPLACEMENT = '\=s:capitalize(submatch(0))'
 
     let l:startLine = line("'<")
-    let l:startCol = s:getCol("<")
+    let l:startCol = virtcol(".")
 
     " when user calls a block operation
     if a:type ==# "block"
@@ -83,14 +76,12 @@ function! ToTitle(type = '')
       let l:curLine = line(".")
 
       sil! keepj norm! VGg@
-      exe "keepj " . l:curLine
       exe "keepj norm! 0\<c-v>G$h\"ad" 
       exe "keepj " . l:startLine
-      exe "sil! keepj norm! " . l:startCol . "\<bar>\"ap"
+      exe "sil! keepj norm! " . l:startCol . "\<bar>\"aP"
       exe "keepj " . l:lastLine
       sil! keepj norm! "_dG
       exe "keepj " . l:startLine
-      let l:startCol += 1
       exe "sil! keepj norm! " . l:startCol . "\<bar>"
 
     " when user calls a char or line operation
@@ -100,9 +91,7 @@ function! ToTitle(type = '')
       call setreg('"', l:titlecased)
       let l:subcommands = #{line: "'[V']p", char: "`[v`]p", block: "`[\<c-v>`]p"}
       silent execute "noautocmd keepjumps normal! " .. get(l:subcommands, a:type, "")
-
       exe "keepj " . l:startLine
-      let l:startCol += 1
       exe "sil! keepj norm! " . l:startCol . "\<bar>"
     endif
   finally
