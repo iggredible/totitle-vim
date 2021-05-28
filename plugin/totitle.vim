@@ -30,7 +30,7 @@ function! s:capitalize(string)
     endif
 
     let l:str = tolower(a:string)
-    let l:exclusions = '^\(a\|an\|and\|at\|but\|by\|en\|for\|in\|nor\|of\|off\|on\|or\|other\|out\|per\|so\|the\|to\|up\|yet\|v\.?\|vs\.?\|via\)$'
+    let l:exclusions = '^\(a\|an\|and\|at\|but\|by\|en\|for\|in\|nor\|of\|off\|on\|or\|out\|per\|so\|the\|to\|up\|yet\|v\.?\|vs\.?\|via\)$'
     if (match(l:str, l:exclusions) >= 0) || (index(s:local_exclusion_list, l:str) >= 0)
       return l:str
     endif
