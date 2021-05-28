@@ -34,7 +34,6 @@ nnoremap <expr> gzz ToTitle() .. '_'
 For example, if you use [vim-plug](https://github.com/junegunn/vim-plug):
 
 ```
-
 call plug#begin('~/.vim/plugged')
   Plug 'iggredible/totitle-vim'
 call plug#end()
