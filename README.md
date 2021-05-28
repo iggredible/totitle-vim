@@ -1,8 +1,8 @@
 # Totitle.vim
 
-Totitle.vim is a plugin that adds an operator to title-case your text. 
+Totitle.vim is a plugin that adds an operator to titlecase your text.
 
-*This project was inspired by Chris Toomley's [vim-title-case](https://github.com/christoomey/vim-title-case) plugin, with some added improvements.*
+*This project was inspired by Chris Toomley's [vim-titlecase](https://github.com/christoomey/vim-titlecase) plugin, with some added improvements.*
 
 # Usage
 
@@ -13,9 +13,9 @@ Vim comes with three case operators: uppercase (`gU`), lowercase (`gu`), and tog
 ```
 
 Suppose that your cursor is on the letter s as shown above:
-- To title-case the innerword, run `gtiw`. It will title-case it to "Snow".
-- To title-case the next two words, run `gt2w`. It will title-case them to "Snow White".
-- To title-case the current line, run `gtt`. It will title-case it to "Snow White and the Seven Dwarves".
+- To titlecase the innerword, run `gtiw`. It will titlecase it to "Snow".
+- To titlecase the next two words, run `gt2w`. It will titlecase them to "Snow White".
+- To titlecase the current line, run `gtt`. It will titlecase it to "Snow White and the Seven Dwarves".
 
 # Key Bindings
 
