@@ -127,7 +127,7 @@ gt{motion}          Titlecases texts based on the motion. Works with text
 
 gtt                 Titlecasee text for the current line.
 
-                                                                *ToTitle()*
+                                                                *totitle-func*
 ToTitle({expr})     The result is a copy of the given String, titlecased. 
 
                     It can also be used as a |method|: >
