@@ -25,7 +25,7 @@ function! s:capitalizeFirstWord(string)
 endfunction
 
 function! s:capitalize(string)
-    if(toupper(a:string) ==# a:string)
+    if(toupper(a:string) ==# a:string && a:string != 'A')
         return a:string
     endif
 
