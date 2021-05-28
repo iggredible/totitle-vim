@@ -1,0 +1,171 @@
+*totitle.txt*   The titlecase operator that you wish Vim had
+
+Author:  Igor Irianto <https://irian.to>
+License: The same as Vim's |license|.
+
+==============================================================================
+TABLE OF CONTENTS                                     *totitle*  *totitle-toc*
+
+    1. Intro ........................... |totitle-intro|
+    2. Usage ........................... |totitle-usage|
+    3. Words to capitalize ............. |totitle-words|
+    4. Operator ........................ |totitle-operator|
+    5. Key-binding ..................... |totitle-keybinding|
+    6. Bugs ............................ |totitle-bug-report|
+    7. Contributing .................... |totitle-contributing|
+    8. Credits ......................... |totitle-credits|
+
+==============================================================================
+1. Intro                                                       *totitle-intro*
+
+Vim comes with three case operators: uppercase (`gU`), lowercase (`gu`), and
+togglecase (`g~`). 
+
+If you are writing a header, you need a titlecase operator. For example, if 
+you want to titlecase "snow white and the seven dwarves", you may try running 
+`:s/\<./\u&/g` to uppercase the first character in each word, giving you 
+"Snow White And The Seven Dwarves". The conjunction ("and") and the article 
+("the") should be lowercased. 
+
+What you need is an operator smart enough to give you "Snow White and the 
+Seven Dwarves".
+
+This plugin lets you format headers easily.
+
+==============================================================================
+2. Usage                                                       *totitle-usage*
+
+Totitle is mapped to `gt` and works like a Vim operator. It is designed to 
+mimic |gu|, |gU|, and |g~|.
+
+Suppose that your cursor is on the character "s" on a header below:
+
+[s]now white and the seven dwarves
+
+- To titlecase the inner word, run `gtiw`. It will titlecase it to "Snow".
+- To titlecase the next two words, run `gt2w`. It will titlecase them to 
+"Snow White".
+- To titlecase the current line, run `gtt`. It will titlecase it to "Snow 
+White and the Seven Dwarves".
+
+Titlecase also works with the visual mode (character, line, and block). 
+Highlight the words that you want to titlecase then press `gt`.
+
+Finally, just like Vimscript has `toupper()` and `tolower()`, you can also use
+the `ToTitle()` command: >
+
+    :echo ToTitle("hello world")
+    " returns Hello World
+
+==============================================================================
+3. Words to capitalize                                         *totitle-words*
+
+There are many different capitalization rules in the English language: MLA,
+APA, AMA, AP, etc. Totitle takes the "simplest-combination-that-works" 
+approach.
+
+Here are the two basic assumptions:
+1. First, the first word in the beginning of a sentence is always capitalized.
+2. Second, certain adverbs, articles, prepositions, and conjunctions are 
+purposely being lowercased.
+
+These words are always lowercased:
+- a
+- an
+- and
+- at
+- but
+- by
+- en
+- for
+- in
+- nor
+- of
+- off
+- on
+- or
+- other
+- out
+- per
+- so
+- the
+- to
+- up
+- v.?
+- via
+- vs.?
+- yet
+
+One challenge when writing this plugin is figuring out which word to 
+capitalize and not to capitalize. For example, MLA and AP suggest to
+capitalize the first and last words, while APA and AMA only the first word. 
+Another example, the words "as" and "if" are capitalized under AMA and MLA, 
+but they are not capitalized under APA and AP.
+
+I decided to stick with the principle of least action. The first word is 
+always capitalized but I won't enforce the last word to be capitalized if 
+they are in the list of special words. The words "as" and "if" will be 
+treated as if they are non-special (they will be capitalized).
+
+If you want totitle to lowercase specific words, you can add them into the 
+`totitle_excluded_words` list in your vimrc: >
+
+    let totitle_excluded_words = ["as", "if"]
+
+
+There are other rules dealing with hyphenation, latin words, etc. I decided
+that it's not worth the hassle to include them, since their usage is rare.
+
+It is entirely possible that in the future they may be added, but for now,
+these are good enough.
+
+==============================================================================
+4. Operators                                                *totitle-operator*
+
+gt{motion}          Titlecases texts based on the motion. Works with text 
+                    objects and is repeatable with |.|.
+
+gtt                 Titlecasee text for the current line.
+
+                                                                *ToTitle()*
+ToTitle({expr})     The result is a copy of the given String, titlecased. 
+
+                    It can also be used as a |method|: >
+                        "snow white and the seven dwarves"->ToTitle()
+
+==============================================================================
+5. Key-binding                                            *totitle-keybinding*
+
+Vim by default uses |gt| for a tab command. If you want to use a different key
+binding, like `gz`, add these in your |.vimrc|: >
+
+    let g:totitle_default_keys = 0
+
+    nnoremap <expr> gz ToTitle()
+    xnoremap <expr> gz ToTitle()
+    nnoremap <expr> gzz ToTitle() .. '_'
+
+==============================================================================
+6. Bugs                                                   *totitle-bug-report*
+
+Feel free to raise an issue.
+
+==============================================================================
+7. Contributing                                         *totitle-contributing*
+
+If you want to contribute to this project, please feel free to submit a
+PR.
+
+==============================================================================
+8. Credits                                                   *totitle-credits*
+
+This plugin was inspired by Chris Toomey's awesome vim-titlecase plugin: 
+https://github.com/christoomey/vim-titlecase.
+
+The grammar rules are derived from https://titlecaseconverter.com/rules/.
+
+Vim's |g@| helped me to get started. 
+I also learned a lot by reading the https://github.com/vim-scripts/vis plugin.
+
+==============================================================================
+
