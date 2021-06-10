@@ -57,7 +57,7 @@ function! ToTitle(type = '')
 
     silent exe 'noautocmd keepjumps normal! ' .. get(l:commands, a:type, '')
     let l:selected_phrase = getreg('"')
-    let l:WORD_PATTERN = '\<\(\k\)\(\k*''*\k*\)\>'
+    let l:WORD_PATTERN = '\<\k*\>'
     let l:UPCASE_REPLACEMENT = '\=s:capitalize(submatch(0))'
 
     let l:startLine = line("'<")
